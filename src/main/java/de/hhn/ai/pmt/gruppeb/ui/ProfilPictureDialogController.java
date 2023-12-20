@@ -1,5 +1,6 @@
 package de.hhn.ai.pmt.gruppeb.ui;
 
+import de.hhn.ai.pmt.gruppeb.model.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

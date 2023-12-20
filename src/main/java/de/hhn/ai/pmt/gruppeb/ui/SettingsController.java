@@ -1,5 +1,8 @@
 package de.hhn.ai.pmt.gruppeb.ui;
 
+import de.hhn.ai.pmt.gruppeb.model.Recipe;
+import de.hhn.ai.pmt.gruppeb.model.User;
+import de.hhn.ai.pmt.gruppeb.model.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,13 +10,39 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.orm.PersistentException;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 public class SettingsController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    private User testUser;
+
+    @FXML
+    public void initialize(){
+        try {
+            User[] users = UserDAO.listUserByQuery("name = 'relaxo'", "name");
+            if(users.length == 0){
+                testUser = UserDAO.createUser();
+                testUser.setEmail("ok@42.com");
+                testUser.setName("relaxo");
+                testUser.setIsAdmin(false);
+                testUser.setPassword(BCrypt.hashpw("1234", BCrypt.gensalt()));
+                testUser.setProfilPicture("https://pascalpex.ddns.net/img/logo.png");
+                testUser.setTimestamp(Timestamp.from(Instant.now()));
+                UserDAO.save(testUser);
+            }else{
+                testUser = users[0];
+            }
+        } catch (PersistentException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void switchToPasswordDialog(ActionEvent event) throws IOException {
         root = FXMLLoader.load((HelloApplication.class.getResource("PasswordDialog.fxml")));
@@ -55,6 +84,8 @@ public class SettingsController {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @FXML
     void onChangeProfilPictureClick(ActionEvent event) {

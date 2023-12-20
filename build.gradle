@@ -38,6 +38,8 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation fileTree(dir: "../looloo/lib", include: "*.jar")
+    implementation files("../looloo/classes")
 }
 
 test {
@@ -55,3 +57,8 @@ jlink {
 jlinkZip {
     group = 'distribution'
 }
+
+ant.importBuild('../looloo/build.xml') { antTarget ->
+    'ant-' + antTarget
+}
+compileJava.dependsOn "ant-compile"
