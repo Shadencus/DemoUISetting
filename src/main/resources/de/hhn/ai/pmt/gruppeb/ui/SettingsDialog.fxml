@@ -24,29 +24,29 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox fx:id="buttons" alignment="CENTER" prefHeight="200.0" prefWidth="120.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onLogOutClick" text="Abmelden">
+                  <Button mnemonicParsing="false" onAction="#onLogOutClick" prefHeight="25.0" prefWidth="135.0" text="Abmelden" wrapText="true">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onChangeProfilPictureClick" text="Profilbild ändern">
+                  <Button mnemonicParsing="false" onAction="#onChangeProfilPictureClick" prefHeight="25.0" prefWidth="216.0" text="Profilbild ändern">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button onAction="#onChangeUsernameClick" text="Nutzername ändern">
+                  <Button onAction="#onChangeUsernameClick" prefHeight="25.0" prefWidth="142.0" text="Name ändern">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onChangePasswordClick" text="Passwort ändern">
+                  <Button mnemonicParsing="false" onAction="#onChangePasswordClick" prefHeight="25.0" prefWidth="150.0" text="Passwort ändern">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onDeleteAccountClick" text="Konto löschen">
+                  <Button mnemonicParsing="false" onAction="#onDeleteAccountClick" prefHeight="25.0" prefWidth="153.0" text="Konto löschen">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -58,5 +58,6 @@
             </VBox>
          </children>
       </HBox>
+      <Label fx:id="settingInfoLAbel" textAlignment="CENTER" wrapText="true" />
    </children>
 </VBox>

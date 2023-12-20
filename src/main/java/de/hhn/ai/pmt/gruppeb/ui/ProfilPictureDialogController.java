@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.orm.PersistentException;
 
 import java.io.IOException;
 
@@ -38,6 +39,18 @@ public class ProfilPictureDialogController {
 
     @FXML
     void onProfilPicOkClick(ActionEvent event) {
-
+        try {
+            String urlData = url.getText();
+            if(!urlData.isBlank()){
+                SettingsController.testUser.setProfilPicture(urlData);
+                UserDAO.save(SettingsController.testUser);
+                switchToSettings(event);
+            }else{
+                url.setText("");
+                url.setPromptText("Please enter valid input");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

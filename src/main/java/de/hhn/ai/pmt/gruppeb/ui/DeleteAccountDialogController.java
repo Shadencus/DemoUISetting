@@ -1,5 +1,6 @@
 package de.hhn.ai.pmt.gruppeb.ui;
 
+import de.hhn.ai.pmt.gruppeb.model.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.orm.PersistentException;
 
 import java.io.IOException;
 
@@ -31,7 +33,12 @@ public class DeleteAccountDialogController {
     }
 
     @FXML
-    void onDelAccOkClick0(ActionEvent event) {
-
+    void onDelAccOkClick(ActionEvent event) {
+        try {
+            UserDAO.delete(SettingsController.testUser);
+            switchToSettings(event);
+        } catch (PersistentException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

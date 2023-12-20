@@ -1,5 +1,6 @@
 package de.hhn.ai.pmt.gruppeb.ui;
 
+import de.hhn.ai.pmt.gruppeb.model.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +37,19 @@ public class UsernameDialogController {
 
     @FXML
     void onUsernameOkClick(ActionEvent event) {
-
+        try {
+            String usernameData = newUsername.getCharacters().toString();
+            if(!usernameData.isBlank()){
+                SettingsController.testUser.setName(usernameData);
+                UserDAO.save(SettingsController.testUser);
+                switchToSettings(event);
+            }else{
+                newUsername.setText("");
+                newUsername.setPromptText("Please enter valid input");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }

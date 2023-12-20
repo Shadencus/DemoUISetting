@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.orm.PersistentException;
 
@@ -21,16 +23,17 @@ public class SettingsController {
     private Scene scene;
     private Parent root;
 
-    private User testUser;
+    public static User testUser;
+
 
     @FXML
     public void initialize(){
         try {
-            User[] users = UserDAO.listUserByQuery("name = 'relaxo'", "name");
+            User[] users = UserDAO.listUserByQuery("email = 'ok@42.com'", "email");
             if(users.length == 0){
                 testUser = UserDAO.createUser();
                 testUser.setEmail("ok@42.com");
-                testUser.setName("relaxo");
+                testUser.setName("Behemoth");
                 testUser.setIsAdmin(false);
                 testUser.setPassword(BCrypt.hashpw("1234", BCrypt.gensalt()));
                 testUser.setProfilPicture("https://pascalpex.ddns.net/img/logo.png");
@@ -38,11 +41,19 @@ public class SettingsController {
                 UserDAO.save(testUser);
             }else{
                 testUser = users[0];
+                System.out.println(testUser.getName());
+                System.out.println(testUser.getProfilPicture());
+                System.out.println(testUser.getPassword());
+                System.out.println();
             }
         } catch (PersistentException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
+
 
     public void switchToPasswordDialog(ActionEvent event) throws IOException {
         root = FXMLLoader.load((HelloApplication.class.getResource("PasswordDialog.fxml")));
@@ -75,6 +86,13 @@ public class SettingsController {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    private Label settingInfoLAbel;
+
+    @FXML
+    private VBox buttons;
+
 
     @FXML
     void onChangePasswordClick(ActionEvent event) {
@@ -117,6 +135,7 @@ public class SettingsController {
 
     @FXML
     void onLogOutClick(ActionEvent event) {
-
+        settingInfoLAbel.setText("Logged out");
+        buttons.setDisable(true);
     }
 }
